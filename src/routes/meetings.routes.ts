@@ -8,6 +8,7 @@ const router = Router();
  * /meetings:
  *   post:
  *     summary: Create a new meeting
+ *     tags:[Meeting]
  *     description: Create a new meeting entity
  *     requestBody:
  *       required: true

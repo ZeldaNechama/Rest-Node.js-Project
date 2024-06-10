@@ -55,6 +55,7 @@ router.put('/:id', updateService);
  * /services/{id}:
  *   delete:
  *     summary: Delete a service
+ *     tags:[Service]
  *     description: Delete an existing service entity
  *     parameters:
  *       - in: path

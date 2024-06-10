@@ -3,11 +3,13 @@ import { updateBusinees, createBusiness } from "../controllers/business.controll
 
 const router = Router();
 
+
 /**
  * @swagger
  * /api/business:
  *   post:
  *     summary: Create a new business
+ *     tags:[Business]
  *     description: Create a new business entity
  *     requestBody:
  *       required: true

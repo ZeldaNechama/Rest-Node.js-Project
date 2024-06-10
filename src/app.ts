@@ -6,9 +6,13 @@ import meetingRouter from './routes/meetings.routes';
 import userRouter from './routes/users.routes';
 import errorHandler from './middlewares/errorHandler';
 import connectDB from './database';
+import { setupSwagger } from './swagger';
+
 
 const app = express();
 connectDB();
+setupSwagger(app);
+
 
 app.use(express.json());
 app.use(bodyParser.json());

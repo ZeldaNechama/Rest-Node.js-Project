@@ -8,6 +8,7 @@ const router = Router();
  * /users:
  *   post:
  *     summary: Create a new user
+ *     tags:[User]
  *     description: Create a new user entity
  *     requestBody:
  *       required: true
