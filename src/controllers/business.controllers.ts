@@ -1,19 +1,25 @@
-import { Request, Response } from "express";
-import { Business } from "../models/business.models";
-import * as businessService from "../services/business.services"
+import { Request, Response } from 'express';
+import { Business as BusinessInterface } from '../models/business.models';
+import * as businessService from '../services/business.services';
 
 export const createBusiness = async (req: Request, res: Response) => {
-  const business = await businessService.createBusiness(req.body as Business);
-    if (business) {
-        res.status(201).json(business);
-    } else {
-        res.status(400).send("Cannot create Business- Business not defined");
-    }
+  try {
+    const business = await businessService.createBusiness(req.body as BusinessInterface);
+    res.status(201).json(business);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to create business' });
+  }
 };
 
 
+
 export const updateBusinees = async (req: Request, res: Response) => {
-    const business = await businessService.updateBusinees(req.params.businessId, req.body);
+  console.log('in cg');
+  
+  const businessId=req.params.id;
+   console.log('bbbbb',businessId);
+    const business = await businessService.updateBusinees(businessId, req.body);
     if (business) {
       res.json(business);
     } else {

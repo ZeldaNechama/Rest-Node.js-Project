@@ -1,22 +1,36 @@
-import { Business } from '../models/business.models';
+import mongoose, { Error } from 'mongoose';
+import Business, { Business as BusinessInterface } from '../models/business.models';
 
-let businesses: Business[] = [];
 
-
-export const createBusiness = async (business: Business): Promise<Business | undefined> => {
-
-  businesses.push(business);  
-  return business;
-
-}
-
-export const updateBusinees = async (id: string, business: Business): Promise<Business | undefined> => {
-  const index = businesses.findIndex(b => b.businessId === id);
-  if (index !== -1) {
-    businesses[index] = business;
-    return business;
+export const createBusiness = async (business: BusinessInterface): Promise<BusinessInterface | null> => {
+  try {
+    const newBusiness = new Business(business);
+    return await newBusiness.save();
+  } catch (error:any) {
+    if (error.code === 11000) { // 11000 הוא קוד השגיאה של MongoDB למפתח כפול
+      console.error('Duplicate key error:', error.message);
+      return null;
+    }
+    console.error('Error creating business:', error);
+    return null;
   }
-  return undefined;
+};
+
+export const updateBusinees = async (id: string, business: BusinessInterface): Promise<BusinessInterface | null> => {
+ 
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    console.error('Invalid ObjectId:', id);
+    return null;
+  }
+
+  try {
+    return await Business.findByIdAndUpdate(id, business, { new: true });
+  } catch (error) {
+    console.log('Cannot update business', error);
+    return null;
+  }
+
+
 }
 
 
