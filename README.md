@@ -47,4 +47,4 @@ The project is structured into several directories to organize the code cleanly:
 ## Installation
 1. Clone the repository
    ```bash
-   git clone <https://github.com/ZeldaNechama/Rest-Node.js-Project.git>
+   git clone https://github.com/ZeldaNechama/Rest-Node.js-Project.git
