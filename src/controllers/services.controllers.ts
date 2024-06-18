@@ -14,7 +14,6 @@ export const createService = async (req: Request, res: Response) => {
 
 
 export const updateService = async (req: Request, res: Response) => {
-
     const service = await serviceService.updateService(req.params.id, req.body);
     if (service) {
       res.json(service);
@@ -22,7 +21,7 @@ export const updateService = async (req: Request, res: Response) => {
       res.status(404).send("Service  dosn't exict");
     }
 
-}
+};
 
 export const deleteSercice =async(req:Request,res:Response)=>{
  const service=await serviceService.deleteSercice(req.params.id);
@@ -31,7 +30,5 @@ export const deleteSercice =async(req:Request,res:Response)=>{
  }
  else{
     res.send('wasnt able to delete this service');
- }
-
-    
-}
+ }  
+};

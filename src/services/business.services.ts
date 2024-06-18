@@ -1,4 +1,4 @@
-import mongoose, { Error } from 'mongoose';
+import mongoose from 'mongoose';
 import Business, { Business as BusinessInterface } from '../models/business.models';
 
 
@@ -6,8 +6,8 @@ export const createBusiness = async (business: BusinessInterface): Promise<Busin
   try {
     const newBusiness = new Business(business);
     return await newBusiness.save();
-  } catch (error:any) {
-    if (error.code === 11000) { // 11000 הוא קוד השגיאה של MongoDB למפתח כפול
+  } catch (error: any) {
+    if (error.code === 11000) { 
       console.error('Duplicate key error:', error.message);
       return null;
     }
@@ -16,8 +16,7 @@ export const createBusiness = async (business: BusinessInterface): Promise<Busin
   }
 };
 
-export const updateBusinees = async (id: string, business: BusinessInterface): Promise<BusinessInterface | null> => {
- 
+export const updateBusiness = async (id: string, business: BusinessInterface): Promise<BusinessInterface | null> => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     console.error('Invalid ObjectId:', id);
     return null;
@@ -25,12 +24,13 @@ export const updateBusinees = async (id: string, business: BusinessInterface): P
 
   try {
     return await Business.findByIdAndUpdate(id, business, { new: true });
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     console.log('Cannot update business', error);
     return null;
   }
+};
 
-
-}
 
 
