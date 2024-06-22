@@ -3,12 +3,12 @@ import mongoose, { Schema } from "mongoose";
 export interface Service{
     businessId:string,
     serviceId:string,
-    serviceData:object
+    serviceData:any
 }
 
 const ServiceSchema: Schema = new Schema({
     businessId: { type: String, required: true, unique: true },
-    userId: { type: String, required: true },
+    serviceId: { type: String, required: true },
     serviceData:{type:Object,required:true}
   });
   
