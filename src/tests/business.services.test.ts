@@ -40,7 +40,8 @@ describe('Business Service Tests', () => {
       businessId: testBusiness.businessId,
       userId: '789',
     };
-    const result = await updateBusiness(testBusiness.businessId.toString(), updatedBusiness as Business);
+
+    const result = await updateBusiness(testBusiness.id, updatedBusiness as Business);
     
     expect(result).toBeDefined();
     expect((result as Business).userId).toEqual((updatedBusiness as Business).userId);
