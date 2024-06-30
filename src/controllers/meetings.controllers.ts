@@ -8,7 +8,7 @@ export const createMeeting = async (req: Request, res: Response) => {
     res.status(201).json(meeting);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to create meeting' });
+    res.status(401).json({ error: 'Failed to create meeting' });
   }
 };
 
