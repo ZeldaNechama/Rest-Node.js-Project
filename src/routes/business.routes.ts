@@ -4,13 +4,18 @@ import authMiddleware from "../middlewares/auth.middleware"
 
 const router = Router();
 
+/**
+ * @swagger
+ * tags:
+ *   - name: Business
+ *     description: Business management
+ */
 
 /**
  * @swagger
  * /api/business:
  *   post:
- *     tags:
- *       - Business
+ *     tags: [Business]
  *     summary: Create a new business
  *     description: Create a new business entity
  *     requestBody:
@@ -32,9 +37,8 @@ router.post('/',authMiddleware, createBusiness);
  * @swagger
  * /api/business/{id}:
  *   put:
- *     tags:
- *       - Business
  *     summary: Update a business
+ *     tags: [Business]
  *     description: Update an existing business entity
  *     parameters:
  *       - in: path

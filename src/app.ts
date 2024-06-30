@@ -13,12 +13,12 @@ import { setupSwagger } from './swagger';
 
 const app = express();
 connectDB();
-setupSwagger(app);
 
 
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+setupSwagger(app);
 app.use(logMiddleware);
 app.use('/api/auth',authRouter);
 app.use('/api/business',busineesRouter);
