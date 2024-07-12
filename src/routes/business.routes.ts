@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { updateBusinees, createBusiness } from "../controllers/business.controllers";
-import authMiddleware from "../middlewares/auth.middleware"
+import { updateBusinees, createBusiness ,getAllBusinesses,getBusiness} from "../controllers/business.controllers";
+import authMiddleware from "../middlewares/auth.middleware";
 
 const router = Router();
 
@@ -13,11 +13,55 @@ const router = Router();
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     Business:
+ *       type: object
+ *       required:
+ *         - businessId
+ *         - userId
+ *       properties:
+ *         businessId:
+ *           type: string
+ *           example: 'b12345'
+ *         userId:
+ *           type: string
+ *           example: 'u67890'
+ */
+/**
+ * @swagger
+ * /api/business:
+ *   get:
+ *     summary: Get all businesses
+ *     tags: [Business]
+ *     description: Retrieve a list of all businesses
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: A list of businesses
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Business'
+ *       401:
+ *         description: Unauthorized - JWT token is missing or invalid
+ *       500:
+ *         description: Internal Server Error
+ */
+router.get('/',authMiddleware, getAllBusinesses);
+
+/**
+ * @swagger
  * /api/business:
  *   post:
- *     tags: [Business]
  *     summary: Create a new business
- *     description: Create a new business entity
+ *     tags: [Business]
+ *     description: Register a new business
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -26,27 +70,28 @@ const router = Router();
  *             $ref: '#/components/schemas/Business'
  *     responses:
  *       201:
- *         description: Created successfully
+ *         description: Business created successfully
  *       400:
  *         description: Bad request
+ *       401:
+ *         description: Unauthorized
  */
-
-router.post('/',authMiddleware, createBusiness);
+router.post('/', authMiddleware, createBusiness);
 
 /**
  * @swagger
  * /api/business/{id}:
  *   put:
- *     summary: Update a business
+ *     summary: Update an existing business
  *     tags: [Business]
- *     description: Update an existing business entity
+ *     description: Update business details
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID of the business to update
  *         schema:
  *           type: string
+ *         description: The business ID
  *     requestBody:
  *       required: true
  *       content:
@@ -55,9 +100,11 @@ router.post('/',authMiddleware, createBusiness);
  *             $ref: '#/components/schemas/Business'
  *     responses:
  *       200:
- *         description: Updated successfully
- *       404:
- *         description: Business not found
+ *         description: Business updated successfully
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
  */
 router.put('/:id', updateBusinees);
 

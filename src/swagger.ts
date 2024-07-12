@@ -1,22 +1,41 @@
-import swaggerJSDoc from 'swagger-jsdoc';
+import { Express } from 'express';
+import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import { Application } from 'express';
 
-const options = {
-    definition: {
-        openapi: '3.0.0',
-        info: {
-            title: 'My Business API',
-            version: '1.0.0',
-            description: 'A description of your API',
-        },
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Business API',
+      version: '1.0.0',
+      description: 'API for managing businesses'
     },
-    
-    apis: ['./src/routes/*.ts'], // Path to the API docs
+    servers: [
+      {
+        url: 'http://localhost:3000',
+        description: 'Local server'
+      }
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
+  },
+  apis: ['./src/routes/*.ts'],
 };
 
-const swaggerSpec = swaggerJSDoc(options);
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
-export const setupSwagger = (app: Application) => {
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+export const setupSwagger = (app: Express) => {
+  app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 };

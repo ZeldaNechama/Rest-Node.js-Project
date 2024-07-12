@@ -1,48 +1,113 @@
+// import { Router } from 'express';
+// import { createService, updateService, deleteSercice } from "../controllers/services.controllers";
+// import authMiddleware from "../middlewares/auth.middleware"
+
+// const router = Router();
+
+// router.post('/', authMiddleware,createService);
+
+// router.put('/:id', updateService);
+
+// router.delete('/:id', deleteSercice);
+
+// export default router;
 import { Router } from 'express';
-import { createService, updateService, deleteSercice } from "../controllers/services.controllers";
-import authMiddleware from "../middlewares/auth.middleware"
+import { createService, updateService, deleteSercice,getAllServices} from "../controllers/services.controllers";
+import authMiddleware from "../middlewares/auth.middleware";
 
 const router = Router();
 
 /**
  * @swagger
  * tags:
- *   - name: Services
- *     description: Services management
+ *   name: Services
+ *   description: API endpoints for managing services
  */
 
 /**
  * @swagger
- * /api/services:
- *   post:
+ * components:
+ *   schemas:
+ *     Service:
+ *       type: object
+ *       required:
+ *         - businessId
+ *         - serviceId
+ *         - serviceData
+ *       properties:
+ *         businessId:
+ *           type: string
+ *           example: 'xxxx'
+ *         serviceId:
+ *           type: string
+ *           example: 'xxxx'
+ *         serviceData:
+ *           type: object
+ *           example: {}
+ */
+/**
+ * @swagger
+ * /api/service:
+ *   get:
+ *     summary: Get all services
  *     tags: [Services]
+ *     description: Retrieve a list of all services
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: A list of services
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Service'
+ *       401:
+ *         description: Unauthorized - JWT token is missing or invalid
+ *       500:
+ *         description: Internal Server Error
+ */
+router.get('/', authMiddleware, getAllServices);
+
+/**
+ * @swagger
+ * /api/service:
+ *   post:
  *     summary: Create a new service
- *     description: Create a new service entity
+ *     tags: [Services]
+ *     description: Create a new service
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/services'
+ *             $ref: '#/components/schemas/Service'
  *     responses:
- *       201:
- *         description: Created successfully
+ *       200:
+ *         description: Service created successfully
  *       400:
  *         description: Bad request
+ *       401:
+ *         description: Unauthorized, JWT token is missing or invalid
  */
-router.post('/', authMiddleware,createService);
+router.post('/', authMiddleware, createService);
+
 /**
  * @swagger
- * /api/services/{id}:
+ * /api/service/{id}:
  *   put:
- *     summary: Update a service
+ *     summary: Update a service by ID
  *     tags: [Services]
- *     description: Update an existing service entity
+ *     description: Update a service by ID
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID of the service to update
  *         schema:
  *           type: string
  *     requestBody:
@@ -50,36 +115,44 @@ router.post('/', authMiddleware,createService);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Services'
+ *             $ref: '#/components/schemas/Service'
  *     responses:
  *       200:
- *         description: Updated successfully
+ *         description: Service updated successfully
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized, JWT token is missing or invalid
  *       404:
  *         description: Service not found
  */
-  
-router.put('/:id', updateService);
+router.put('/:id', authMiddleware, updateService);
+
 /**
  * @swagger
- * /api/services/{id}:
+ * /api/service/{id}:
  *   delete:
- *     summary: Delete a product
+ *     summary: Delete a service by ID
  *     tags: [Services]
- *     description: Delete an existing service entity
+ *     description: Delete a service by ID
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID of the service to delete
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: Deleted successfully
+ *         description: Service deleted successfully
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized, JWT token is missing or invalid
  *       404:
  *         description: Service not found
  */
-
-router.delete('/:id', deleteSercice);
+router.delete('/:id', authMiddleware, deleteSercice);
 
 export default router;
