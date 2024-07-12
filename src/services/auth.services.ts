@@ -4,8 +4,15 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 
+
 export const signUp=async(userData:any):Promise<userInterface|undefined>=>{
     const newUser=userData as userInterface;
+    const existingUser = await User.findOne({ userId: newUser.userId });
+
+    if (existingUser) { 
+    console.log('existingUser');
+      throw new Error('User already exists');
+    }
     const hashPassword=await bcrypt.hash(newUser.password,10);
     newUser.password=hashPassword;
     const user=new User(newUser);

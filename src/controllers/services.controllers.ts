@@ -2,6 +2,28 @@ import { Request, Response } from 'express';
 import { Service as ServiceInterface } from '../models/services.models';
 import * as serviceService from '../services/services.services';
 
+export const getAllServices=async(req:Request,res:Response)=>{
+  try {
+    const services=await serviceService.getAllServices();
+    res.status(200).json(services);
+    
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+export const getService=async(req:Request,res:Response)=>{
+  try {
+    const businessId=(req.body as ServiceInterface).businessId;
+    const service = await serviceService.getService(businessId);
+    res.status(200).json(service);
+    
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+
 export const createService = async (req: Request, res: Response) => {
   try {
     const service = await serviceService.createService(req.body as ServiceInterface);
