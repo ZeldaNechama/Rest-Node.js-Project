@@ -64,22 +64,22 @@ The project is structured into several directories to organize the code cleanly:
    
 ## API Endpoints
 # Business
-`POST /api/business: Create a new business.
-`PUT /api/business/:id: Update an existing business.
-`DELETE /api/business/:id: Delete a business.
+POST /api/business: Create a new business.
+PUT /api/business/:id: Update an existing business.
+DELETE /api/business/:id: Delete a business.
 # Services
-`POST /api/services: Create a new service.
-`PUT /api/services/:id: Update an existing service.
-`DELETE /api/services/:id: Delete a service.
+POST /api/service: Create a new service.
+PUT /api/service/:id: Update an existing service.
+DELETE /api/service/:id: Delete a service.
 # Meeting
-`POST /api/meetings: Create a new meeting.
-`PUT /api/meetings/:id: Update an existing meeting.
-`DELETE /api/meetings/:id: Delete a meeting.
+POST /api/meeting: Create a new meeting.
+PUT /api/meeting/:id: Update an existing meeting.
+DELETE /api/meeting/:id: Delete a meeting.
 # User
-`POST /api/user: Create a new user.
+POST /api/user: Create a new user.
 # Auth
-`POST /api/auth/signup: Sign up a new user.
-`POST /api/auth/signin: Sign in an existing user.
+POST /api/auth/signup: Sign up a new user.
+POST /api/auth/signin: Sign in an existing user.
 
 ## Contributing
 
