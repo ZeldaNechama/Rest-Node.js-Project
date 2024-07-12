@@ -51,11 +51,17 @@ The project is structured into several directories to organize the code cleanly:
 2. Install dependencies
    ```bash
    npm install
-
-3. Run the server
+3. Create a .env file in the root directory of the project.  
+  <mark>Ensure the `.env` file is placed in the root directory of your project.</mark>  
+    Add the following environment variables to it:
+    ```bash
+      TOKEN_KEY=hfjQ211123!!%^$~FF123nmdfa
+      MONGODB_URI=mongodb://localhost:27017/my_database
+      PORT=3000 
+4. Run the server
    ```bash
-   npm start
-
+   npm run dev
+   
 ## API Endpoints
 # Business
 `POST /api/business: Create a new business.
